@@ -1,0 +1,46 @@
+[package]
+name = "trixy"
+version = "0.6.1"
+edition = "2021"
+description = "Trixy: a tiny local-first encrypted project messenger using Firebase as an HTTPS mailbox"
+license = "MIT"
+
+[lib]
+name = "trixy"
+path = "src/lib.rs"
+
+[[bin]]
+name = "trixy"
+path = "src/bin/trixy.rs"
+
+[dependencies]
+anyhow = "1.0"
+base64 = "0.22"
+chacha20poly1305 = "0.10"
+chrono = { version = "0.4", features = ["serde"] }
+eframe = "=0.29.1"
+# winit 0.30.12 fixed the macOS 26 NSScreen Objective-C encoding crash.
+winit = "=0.30.13"
+ed25519-dalek = "2.1"
+rand = "0.8"
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls"] }
+rfd = "=0.17.2"
+rusqlite = { version = "0.31", features = ["bundled"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+uuid = { version = "1", features = ["v7", "serde"] }
+x25519-dalek = { version = "2.0", features = ["static_secrets"] }
+
+[package.metadata.packager]
+before-packaging-command = "cargo build --release"
+product-name = "Trixy"
+identifier = "org.trixy.desktop"
+out-dir = "dist"
+binaries-dir = "target/release"
+icons = ["assets/trixy-icon.png", "assets/trixy-icon.icns", "assets/trixy-icon.ico"]
+
+[profile.release]
+strip = true
+lto = "thin"
+codegen-units = 1

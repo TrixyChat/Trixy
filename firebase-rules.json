@@ -1,0 +1,22 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "workmsg_v1": {
+      "mailboxes": {
+        "$mailbox_id": {
+          ".read": true,
+          "$packet_id": {
+            ".write": true
+          }
+        }
+      },
+      "attachments": {
+        "$attachment_token": {
+          ".read": true,
+          ".write": true
+        }
+      }
+    }
+  }
+}
