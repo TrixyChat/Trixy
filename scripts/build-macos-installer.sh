@@ -15,7 +15,7 @@ if ! cargo packager --version >/dev/null 2>&1; then
 fi
 
 rm -rf dist
-cargo packager --release --formats app dmg
+cargo packager --release --formats app,dmg
 
 echo
 echo "Installer build complete. Look in: $ROOT_DIR/dist"
