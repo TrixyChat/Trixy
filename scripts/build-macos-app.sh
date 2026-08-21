@@ -1,6 +1,9 @@
 #!/bin/sh
 set -eu
 
+ROOT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+cd "$ROOT_DIR"
+
 cargo build --release --bin trixy
 
 APP="dist/Trixy.app"
@@ -29,8 +32,10 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
 </plist>
 PLIST
 
+# Keep the standalone app usable for local testing. The installer script signs
+# and verifies it again immediately before creating the DMG.
 if command -v codesign >/dev/null 2>&1; then
-  codesign --force --deep --sign - "$APP" >/dev/null 2>&1 || true
+  codesign --force --deep --sign - "$APP"
 fi
 
 echo "Built $APP"
